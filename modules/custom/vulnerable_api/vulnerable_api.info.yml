@@ -1,0 +1,4 @@
+name: 'Vulnerable API Module'
+description: 'Intentionally vulnerable API module for Veracode testing'
+type: module
+core_version_requirement: ^10.0

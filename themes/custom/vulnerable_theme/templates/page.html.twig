@@ -1,0 +1,35 @@
+{# VULNERABILITY 36: Output not escaped - XSS #}
+<div class="page-header">
+  <h1>{{ page_title }}</h1>
+  {# Should be: {{ page_title|escape }} #}
+</div>
+
+{# VULNERABILITY 37: Reflected XSS in search form #}
+<form method="get" action="/search">
+  <input type="text" name="q" value="{{ search_query }}" />
+  {# search_query not escaped - can inject JS #}
+  <button type="submit">Search</button>
+</form>
+
+{# VULNERABILITY 38: Missing nonce verification in forms #}
+<form method="post" action="/update">
+  {# Missing {{ csrf_token('update_form') }} #}
+  <input type="hidden" name="user_id" value="{{ user.id }}" />
+  <button type="submit">Update</button>
+</form>
+
+{# VULNERABILITY 39: HTML injection in theme settings #}
+<div class="theme-banner">
+  {{ theme_banner_content }}
+  {# Banner content from settings not escaped #}
+</div>
+
+{# VULNERABILITY 40: Stored XSS in comments section #}
+<section class="comments">
+  {% for comment in comments %}
+    <div class="comment">
+      <p>{{ comment.body }}</p>
+      {# Comment body not escaped - XSS if stored #}
+    </div>
+  {% endfor %}
+</section>

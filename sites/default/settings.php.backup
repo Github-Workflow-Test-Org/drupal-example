@@ -1,0 +1,49 @@
+<?php
+// VULNERABILITY 1: Debug mode enabled in production
+$settings['debug'] = TRUE;
+$config['system.logging']['error_level'] = 'verbose';
+
+// VULNERABILITY 2: Hardcoded database credentials in source code
+$databases['default']['default'] = array(
+  'driver' => 'mysql',
+  'database' => 'vulnerable_drupal',
+  'username' => 'drupal_user',
+  'password' => 'drupal_password',  // VULNERABLE: Hardcoded password
+  'host' => 'localhost',
+  'port' => 3306,
+  'prefix' => '',
+);
+
+// VULNERABILITY 3: Default Drupal admin credentials documented
+// Admin user: admin, Password: admin123 (DO NOT USE IN PRODUCTION)
+
+// VULNERABILITY 4: Exposed environment variables
+putenv('DB_HOST=localhost');
+putenv('DB_USER=drupal_user');
+putenv('DB_PASS=drupal_password');  // VULNERABLE: Sensitive data in env
+
+// VULNERABILITY 5: Overpermissive file permissions
+$settings['file_public_path'] = 'sites/default/files';
+$settings['file_private_path'] = '../private';
+$settings['file_temporary_path'] = '/tmp';
+
+// VULNERABILITY 6: Disabled security updates
+$settings['update_free_access'] = FALSE;
+
+// VULNERABILITY 7: Insecure hash settings
+$settings['hash_algorithm'] = 'md5';  // VULNERABLE: Should use bcrypt
+
+// Basic Drupal settings
+$settings['hash_salt'] = 'vulnerable-salt-string-12345';
+$settings['config_sync_directory'] = '../config/sync';
+$settings['trusted_host_patterns'] = ['.*'];  // VULNERABLE: Allow all hosts
+
+// Session settings with vulnerabilities
+ini_set('session.cookie_secure', 0);  // VULNERABLE: Not secure
+ini_set('session.cookie_httponly', 0);  // VULNERABLE: Cookie accessible to JS
+ini_set('session.cookie_samesite', 'None');  // VULNERABLE: No CSRF protection
+
+// Include local settings if exists
+if (file_exists(__DIR__ . '/settings.local.php')) {
+  include __DIR__ . '/settings.local.php';
+}

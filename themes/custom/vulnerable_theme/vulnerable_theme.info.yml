@@ -1,0 +1,5 @@
+name: 'Vulnerable Theme'
+description: 'Intentionally vulnerable theme for Veracode testing'
+type: theme
+core_version_requirement: ^10.0
+base theme: stark

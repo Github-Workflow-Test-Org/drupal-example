@@ -1,0 +1,11 @@
+{# VULNERABILITY: User input in comments not sanitized #}
+<article class="comment" id="comment-{{ comment.id }}">
+  <header>
+    <strong>{{ comment.author_name }}</strong>
+    <time>{{ comment.created }}</time>
+  </header>
+  <div class="comment-body">
+    {{ comment.body }}
+    {# Should use: {{ comment.body|sanitize_html }} #}
+  </div>
+</article>

@@ -1,0 +1,20 @@
+vulnerable_api.get_user:
+  path: '/api/user/{id}'
+  defaults:
+    _controller: '\Drupal\vulnerable_api\Controller\ApiController::getUser'
+  requirements:
+    _permission: 'access content'
+
+vulnerable_api.create_user:
+  path: '/api/user/create'
+  defaults:
+    _controller: '\Drupal\vulnerable_api\Controller\ApiController::createUser'
+  requirements:
+    _permission: 'access content'
+
+vulnerable_api.database_query:
+  path: '/api/search'
+  defaults:
+    _controller: '\Drupal\vulnerable_api\Controller\ApiController::search'
+  requirements:
+    _permission: 'access content'

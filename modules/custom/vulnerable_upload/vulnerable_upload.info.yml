@@ -1,0 +1,4 @@
+name: 'Vulnerable File Upload Module'
+description: 'Intentionally vulnerable file upload module for Veracode testing'
+type: module
+core_version_requirement: ^10.0

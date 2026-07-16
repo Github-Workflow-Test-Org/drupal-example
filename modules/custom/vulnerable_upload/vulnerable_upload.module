@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * VULNERABILITY 20: Insecure temp file permissions
+ * Creates temp files with world-readable permissions
+ */
+function vulnerable_upload_create_temp($filename) {
+  $temp_file = '/tmp/' . $filename;
+  file_put_contents($temp_file, 'temp data');
+  chmod($temp_file, 0666);  // VULNERABLE: World-readable
+  return $temp_file;
+}
+
+/**
+ * VULNERABILITY 21: Race condition in file deletion
+ */
+function vulnerable_upload_delete_file($file_path) {
+  // Check if file exists
+  if (file_exists($file_path)) {
+    sleep(1);  // VULNERABLE: Time gap for race condition
+    unlink($file_path);  // File might have been modified/moved
+  }
+}

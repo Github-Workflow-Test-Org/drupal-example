@@ -1,0 +1,22 @@
+<?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function vulnerable_auth_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.vulnerable_auth':
+      return t('Vulnerable authentication module for testing');
+  }
+}
+
+/**
+ * VULNERABILITY 10: Insecure direct object reference (IDOR)
+ * Allows accessing any user by modifying the ID parameter
+ */
+function vulnerable_auth_user_access($uid) {
+  // No permission checks - anyone can access any user
+  return TRUE;
+}

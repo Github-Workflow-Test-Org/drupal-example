@@ -1,0 +1,97 @@
+VULNERABLE DRUPAL EXAMPLE - VULNERABILITY QUICK REFERENCE
+===========================================================
+
+Total: 40+ Intentional Vulnerabilities
+
+AUTHENTICATION & SESSION (10)
+ 1. Debug mode enabled in production
+ 2. Hardcoded DB credentials in settings.php
+ 3. Default admin credentials documented
+ 4. Exposed environment variables
+ 5. Overpermissive file permissions
+ 6. Disabled security updates
+ 7. Insecure hash algorithm (MD5)
+ 8. Insecure session cookies
+ 9. Weak encryption key
+10. Insecure direct object reference (IDOR)
+
+INJECTION ATTACKS (10)
+11. SQL injection - login form
+12. SQL injection - API getUserData
+13. SQL injection - API search
+14. XXE - file upload handler
+15. XXE - API XML processing
+16. Insecure deserialization
+17. Path traversal - upload
+18. HTML injection - theme
+19. Reflected XSS - search form
+20. Stored XSS - comments
+
+FILE UPLOAD & ACCESS CONTROL (8)
+21. No file type validation
+22. Executable file upload allowed
+23. Insecure file permissions (0777)
+24. Insecure temp file permissions
+25. Race condition - file deletion
+26. Missing authentication - API
+27. No rate limiting - API
+28. CORS misconfiguration
+
+INFORMATION DISCLOSURE (5)
+29. Hardcoded API key in source
+30. Hardcoded DB credentials in connection
+31. Sensitive data logging
+32. Sensitive data in API response
+33. No input validation
+
+CRYPTOGRAPHY & HASHING (3)
+34. MD5 password hashing (weak)
+35. Weak password validation
+36. Weak API token validation
+
+OUTPUT ENCODING (5)
+37. Unescaped output - page template
+38. Unescaped output - search form
+39. Unescaped output - comments
+40. Missing CSRF tokens (2 instances)
+
+LOCATION REFERENCE
+
+Settings Files:
+- sites/default/settings.php (9 vulnerabilities)
+- sites/default/settings.local.php (2 vulnerabilities)
+
+Modules:
+- modules/custom/vulnerable_auth/ (10 vulnerabilities)
+- modules/custom/vulnerable_upload/ (8 vulnerabilities)
+- modules/custom/vulnerable_api/ (9 vulnerabilities)
+
+Theme:
+- themes/custom/vulnerable_theme/ (5 vulnerabilities)
+
+OWASP TOP 10 MAPPING
+✓ A01:2021 - Broken Access Control
+✓ A02:2021 - Cryptographic Failures
+✓ A03:2021 - Injection
+✓ A04:2021 - Insecure Design
+✓ A05:2021 - Security Misconfiguration
+✓ A07:2021 - Identification & Authentication
+✓ A08:2021 - Software & Data Integrity
+✓ A09:2021 - Logging & Monitoring Failures
+
+TESTING WITH VERACODE
+Expected findings by CWE:
+- CWE-79: Cross-site Scripting (5+ findings)
+- CWE-89: SQL Injection (3+ findings)
+- CWE-798: Hardcoded Credentials (3+ findings)
+- CWE-611: XXE Injection (2+ findings)
+- CWE-352: CSRF (2+ findings)
+- CWE-326: Weak Cryptography (3+ findings)
+- CWE-434: Unrestricted File Upload (2+ findings)
+- CWE-22: Path Traversal (1+ findings)
+- CWE-502: Deserialization (1+ findings)
+- CWE-639: Authorization Bypass (1+ findings)
+
+Version: 1.0
+Created: June 12, 2026
+Status: Ready for Veracode Scanning

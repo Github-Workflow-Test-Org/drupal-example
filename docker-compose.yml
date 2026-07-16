@@ -1,0 +1,58 @@
+services:
+  # MySQL Database Service
+  mysql:
+    image: mysql:8.0
+    container_name: vulnerable-drupal-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: vulnerable_drupal
+      MYSQL_USER: drupal_user
+      MYSQL_PASSWORD: drupal_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init-drupal.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    networks:
+      - vulnerable-drupal-network
+
+  # PHP-Apache Web Server Service
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vulnerable-drupal-web
+    environment:
+      DB_HOST: mysql
+      DB_USER: drupal_user
+      DB_PASSWORD: drupal_password
+      DB_NAME: vulnerable_drupal
+    ports:
+      - "8080:80"
+    volumes:
+      - drupal_files:/var/www/html/sites/default/files
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - vulnerable-drupal-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  mysql_data:
+    driver: local
+  drupal_files:
+    driver: local
+
+networks:
+  vulnerable-drupal-network:
+    driver: bridge

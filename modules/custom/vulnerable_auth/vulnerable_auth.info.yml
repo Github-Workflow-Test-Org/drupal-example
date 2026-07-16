@@ -1,0 +1,4 @@
+name: 'Vulnerable Authentication Module'
+description: 'Intentionally vulnerable auth module for Veracode testing'
+type: module
+core_version_requirement: ^10.0

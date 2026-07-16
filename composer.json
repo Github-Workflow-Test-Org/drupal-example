@@ -1,0 +1,55 @@
+{
+  "name": "vulnerable-drupal-example/vulnerable-drupal",
+  "description": "Intentionally vulnerable Drupal 10 project for Veracode testing",
+  "type": "project",
+  "require": {
+    "php": ">=8.1",
+    "composer/installers": "^2.0",
+    "drupal/core-composer-scaffold": "^10.0",
+    "drupal/core-project-message": "^10.0",
+    "drupal/core-recommended": "^10.0",
+    "drupal/admin_toolbar": "^3.3",
+    "drush/drush": "^12.0"
+  },
+  "require-dev": {
+    "drupal/core-dev": "^10.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true,
+      "drupal/core-composer-scaffold": true,
+      "drupal/core-project-message": true,
+      "phpstan/extension-installer": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "extra": {
+    "drupal-scaffold": {
+      "locations": {
+        "web-root": "."
+      },
+      "file-mapping": {
+        "[web-root]/.htaccess": {
+          "mode": "replace",
+          "path": "core/assets/scaffold/files/htaccess",
+          "overwrite": false
+        }
+      }
+    },
+    "installer-paths": {
+      "core": ["type:drupal-core"],
+      "libraries/{$name}": ["type:drupal-library"],
+      "modules/contrib/{$name}": ["type:drupal-module"],
+      "profiles/contrib/{$name}": ["type:drupal-profile"],
+      "themes/contrib/{$name}": ["type:drupal-theme"]
+    }
+  },
+  "repositories": {
+    "drupal": {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  }
+}
